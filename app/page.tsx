@@ -104,9 +104,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col xl:flex-row bg-zinc-50 font-sans">
-      {/* LEFT: Form Input Section */}
-      <section className="w-full xl:w-1/3 bg-white border-r border-zinc-200 p-8 h-screen overflow-y-auto custom-scrollbar shadow-xl z-10 relative">
-        <div className="max-w-md mx-auto pb-20">
+      {/* LEFT: Form Input Section (Dibuat jadi 40%) */}
+      <section className="w-full xl:w-[40%] bg-white border-r border-zinc-200 p-8 h-screen overflow-y-auto custom-scrollbar shadow-xl z-10 relative">
+        <div className="max-w-md mx-auto pb-10">
           <h1 className="text-3xl font-extrabold tracking-tight mb-2 text-zinc-900">
             VitaeDrop
           </h1>
@@ -155,7 +155,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "education")}
-                    className="absolute top-2 right-2 text-xs text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-xs text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                   >
                     Delete
                   </button>
@@ -197,7 +197,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => addArrayItem("education")}
-                className="w-full py-2 border-2 border-dashed border-zinc-300 text-zinc-600 rounded-md hover:bg-zinc-50 hover:border-zinc-400 transition-all text-sm font-semibold"
+                className="w-full py-2 border-2 border-dashed border-zinc-300 text-zinc-600 rounded-md hover:bg-zinc-50 hover:border-zinc-400 transition-all text-sm font-semibold cursor-pointer"
               >
                 + Add Education
               </button>
@@ -216,7 +216,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "experience")}
-                    className="absolute top-2 right-2 text-xs text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-xs text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                   >
                     Delete
                   </button>
@@ -258,7 +258,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => addArrayItem("experience")}
-                className="w-full py-2 border-2 border-dashed border-zinc-300 text-zinc-600 rounded-md hover:bg-zinc-50 hover:border-zinc-400 transition-all text-sm font-semibold"
+                className="w-full py-2 border-2 border-dashed border-zinc-300 text-zinc-600 rounded-md hover:bg-zinc-50 hover:border-zinc-400 transition-all text-sm font-semibold cursor-pointer"
               >
                 + Add Experience
               </button>
@@ -280,23 +280,23 @@ export default function Home() {
                 rows={2}
               />
             </div>
-          </form>
-        </div>
 
-        {/* Tombol Sticky */}
-        <div className="sticky bottom-0 left-0 w-full bg-white pt-4 pb-4 border-t">
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="w-full bg-zinc-900 text-white font-medium py-4 rounded-md hover:bg-zinc-800 transition-colors shadow-lg"
-          >
-            Download PDF (A4)
-          </button>
+            {/* Tombol Download (Dipindah ke dalam form, di paling bawah) */}
+            <div className="pt-6">
+              <button
+                type="button"
+                onClick={handlePrint}
+                className="w-full bg-zinc-900 text-white font-medium py-4 rounded-md hover:bg-zinc-800 transition-colors shadow-lg cursor-pointer"
+              >
+                Download
+              </button>
+            </div>
+          </form>
         </div>
       </section>
 
-      {/* RIGHT: Live Preview Section */}
-      <section className="w-full xl:w-2/3 bg-zinc-300 p-8 flex justify-center items-start h-screen overflow-y-auto">
+      {/* RIGHT: Live Preview Section (Dibuat jadi 60%) */}
+      <section className="w-full xl:w-[60%] bg-zinc-300 p-8 flex justify-center items-start h-screen overflow-y-auto">
         <div
           ref={cvRef}
           className="bg-white shadow-2xl print:shadow-none mx-auto min-h-[297mm] print:min-h-0 print:w-[210mm]"
