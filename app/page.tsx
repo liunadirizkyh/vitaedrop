@@ -111,45 +111,14 @@ export default function Home() {
           </h1>
         </div>
 
-        {/* Garis Struktural (Editorial Look) */}
-        <div className="absolute inset-y-0 left-12 w-px bg-black/10 hidden md:block"></div>
-        <div className="absolute inset-y-0 right-12 w-px bg-black/10 hidden md:block"></div>
-        <div className="absolute inset-x-0 top-20 h-px bg-black/10 hidden md:block"></div>
-        <div className="absolute inset-x-0 bottom-20 h-px bg-black/10 hidden md:block"></div>
-
         {/* 2. FLOATING WIDGETS (Bento Box Elements) */}
-        {/* Top Left: Versioning */}
+
+        {/* Top Left: ATS Feature Widget */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: customEasing }}
-          className="absolute top-6 left-6 md:top-8 md:left-16 flex items-center gap-3 z-20"
-        >
-          <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
-            System v1.0.0
-          </p>
-        </motion.div>
-
-        {/* Top Right: Real-time Status */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: customEasing }}
-          className="absolute top-6 right-6 md:top-8 md:right-16 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm z-20 flex items-center gap-2"
-        >
-          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-          <p className="text-[10px] font-bold uppercase tracking-widest">
-            Live Sync Active
-          </p>
-        </motion.div>
-
-        {/* Bottom Left: ATS Feature Widget */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7, ease: customEasing }}
-          className="absolute bottom-6 left-6 md:bottom-8 md:left-16 bg-white border border-gray-200 p-4 rounded-2xl shadow-xl w-48 z-20 hidden md:block"
+          className="absolute top-6 left-6 md:top-8 md:left-16 bg-white border border-gray-200 p-4 rounded-2xl shadow-xl w-48 z-20 md:block"
         >
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">
             Optimization
@@ -165,12 +134,12 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Bottom Right: Output Format */}
+        {/* Top Right: Output Format */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8, ease: customEasing }}
-          className="absolute bottom-6 right-6 md:bottom-8 md:right-16 text-right z-20 hidden md:block"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: customEasing }}
+          className="absolute top-6 right-6 md:top-8 md:right-16 text-right z-20 md:block"
         >
           <svg
             className="w-10 h-10 ml-auto mb-2 text-black opacity-20"
@@ -193,6 +162,38 @@ export default function Home() {
           </p>
         </motion.div>
 
+        {/* Bottom Left: Real-time Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.7, ease: customEasing }}
+          className="absolute bottom-6 left-6 md:bottom-8 md:left-16 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm z-20 flex items-center gap-2"
+        >
+          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+          <p className="text-[10px] font-bold uppercase tracking-widest">
+            Live Sync Active
+          </p>
+        </motion.div>
+
+        {/* Bottom Right: Contact & Collaboration */}
+        <motion.a
+          href="mailto:liunadi.hidayat@gmail.com?subject=Hello Liunadi! Let's Collaborate"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8, ease: customEasing }}
+          className="absolute bottom-6 right-6 md:bottom-8 md:right-16 flex items-center gap-3 z-20 group cursor-pointer"
+        >
+          <div className="flex flex-col items-end">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 group-hover:text-black transition-colors text-right">
+              Need Help
+            </p>
+            <p className="text-[8px] font-medium text-gray-400 group-hover:text-gray-600 transition-colors text-right">
+              liunadi.hidayat@gmail.com
+            </p>
+          </div>
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse group-hover:scale-125 transition-transform"></div>
+        </motion.a>
+
         {/* 3. MAIN CENTRAL HERO */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -200,7 +201,7 @@ export default function Home() {
           transition={{ duration: 1.2, ease: customEasing, delay: 0.2 }}
           className="relative z-30 w-full max-w-4xl px-6 flex flex-col items-center"
         >
-          {/* Efek Glow di belakang Logo (Opsional, kasih nuansa biru sedikit biar fresh) */}
+          {/* Efek Glow di belakang Logo */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
           {/* Logo Utama */}
@@ -241,7 +242,7 @@ export default function Home() {
             transition={{ delay: 1.2, duration: 0.8, ease: customEasing }}
             onClick={() => setIsGenerating(true)}
             className="group relative overflow-hidden bg-black text-white py-5 px-14 shadow-2xl hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-            style={{ borderRadius: "2px" }} // Agak kotak biar kesan brutalist
+            style={{ borderRadius: "2px" }}
           >
             <span className="relative z-10 flex items-center gap-4 text-xs md:text-sm font-black uppercase tracking-[0.2em]">
               Start Building
@@ -259,7 +260,6 @@ export default function Home() {
                 ></path>
               </svg>
             </span>
-            {/* Animasi sapuan bg pas di-hover */}
             <div className="absolute inset-0 h-full w-full translate-y-full transition-all duration-300 group-hover:translate-y-0 group-hover:bg-blue-600 z-0"></div>
           </motion.button>
         </motion.div>
