@@ -77,22 +77,9 @@ export default function Home() {
   const cvRef = useRef<HTMLDivElement>(null);
 
   // Logic Print ke PDF
-  // Logic Print ke PDF
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_${cvData.name.replace(/\s+/g, "_")}`,
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 0mm; /* Ini yang akan menghilangkan link URL dan tanggal bawaan browser HP */
-      }
-      @media print {
-        body {
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-      }
-    `,
   });
 
   // ==========================================
@@ -411,7 +398,7 @@ export default function Home() {
   // ==========================================
   return (
     <main className="min-h-screen flex flex-col xl:flex-row bg-zinc-50 font-sans selection:bg-black selection:text-white">
-      {/* LEFT: Form Input Section (Disesuaikan agar scroll HP mulus) */}
+      {/* LEFT: Form Input Section */}
       <section className="w-full xl:w-[40%] bg-white border-r border-zinc-200 p-6 xl:p-8 h-auto xl:h-screen xl:overflow-y-auto custom-scrollbar shadow-xl z-10 relative">
         <div className="max-w-md mx-auto pb-10">
           <button
@@ -466,7 +453,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "education")}
-                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold hover:text-red-700 transition-colors cursor-pointer"
                   >
                     Remove
                   </button>
@@ -526,7 +513,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "experience")}
-                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold hover:text-red-700 transition-colors cursor-pointer"
                   >
                     Remove
                   </button>
@@ -586,7 +573,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "competitions")}
-                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold hover:text-red-700 transition-colors cursor-pointer"
                   >
                     Remove
                   </button>
@@ -646,7 +633,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "volunteers")}
-                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold hover:text-red-700 transition-colors cursor-pointer"
                   >
                     Remove
                   </button>
@@ -706,7 +693,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => removeArrayItem(index, "certifications")}
-                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold hover:text-red-700 transition-colors cursor-pointer"
                   >
                     Remove
                   </button>
@@ -770,13 +757,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* RIGHT: Live Preview Section (Disesuaikan agar bisa pan scroll & layout aman di HP) */}
+      {/* RIGHT: Live Preview Section */}
       <section className="w-full xl:w-[60%] bg-[#e5e5e5] p-4 xl:p-8 flex justify-start xl:justify-center items-start h-auto xl:h-screen overflow-x-auto xl:overflow-y-auto">
         <div
           ref={cvRef}
           className="bg-white shadow-2xl print:shadow-none min-w-[210mm] min-h-[297mm] print:min-h-0 print:min-w-0 print:w-[210mm] shrink-0 xl:mx-auto"
           style={{ width: "210mm", padding: "12mm 15mm" }}
         >
+          {/* INI KUNCI UNTUK MENGHILANGKAN HEADER/FOOTER BROWSER HP */}
+          <style type="text/css" media="print">
+            {`
+              @page {
+                size: A4 portrait;
+                margin: 0px !important; 
+              }
+              body {
+                margin: 0px !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+            `}
+          </style>
+
           <div
             className="text-black text-[10.5pt] leading-[1.4]"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
