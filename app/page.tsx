@@ -76,11 +76,10 @@ export default function Home() {
 
   const cvRef = useRef<HTMLDivElement>(null);
 
-  // Logic Print ke PDF
+  // Logic Print ke PDF (KEMBALI KE REACT-TO-PRINT AGAR ATS FRIENDLY 100%)
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_${cvData.name.replace(/\s+/g, "_")}`,
-    // Tambahkan pageStyle ini untuk memaksa hilangkan header/footer bawaan browser
     pageStyle: `
       @page {
         size: A4 portrait;
@@ -261,7 +260,7 @@ export default function Home() {
 
         {/* 2. FLOATING WIDGETS (Bento Box Elements) */}
 
-        {/* Top Left: ATS Feature Widget */}
+        {/* Top Left: ATS Feature Widget (Tanpa Card/Border) */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -310,7 +309,7 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* Bottom Left: Real-time Status */}
+        {/* Bottom Left: Real-time Status (Tanpa Card/Border) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -757,8 +756,12 @@ export default function Home() {
               />
             </div>
 
-            {/* TOMBOL BAYAR & DOWNLOAD */}
+            {/* TOMBOL BAYAR & DOWNLOAD (DITAMBAH NOTES SINGKAT INGGRIS) */}
             <div className="pt-6">
+              <div className="mb-4 p-4 bg-gray-100 border border-gray-200 rounded-xl text-gray-600 text-[11px] md:text-xs text-center font-medium leading-relaxed">
+                For optimal ATS-friendly results without browser watermarks,
+                please download via Desktop/Laptop.
+              </div>
               <button
                 type="button"
                 disabled={isLoading}
