@@ -18,27 +18,53 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cvData, setCvData] = useState({
-    name: "LIUNADI RIZKY HIDAYAT",
+    name: "Daniel Thomson",
     contact:
-      "liunadi.hidayat@gmail.com | +6281224656654 | linkedin.com/in/liunadirizkyh | github.com/liunadirizkyh",
+      "testing@gmail.com | +62123433123 | linkedin.com/in/testing | github.com/testing",
     summary:
-      "As an undergraduate student in Computer Science, I am deeply passionate about technology advancement and have developed expertise in various programming languages. I have a strong interest in software development and cyber security, which drives my commitment to building secure and innovative solutions.",
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus, mollitia. Repellat, similique necessitatibus, doloribus tempore ipsam iste nostrum velit voluptas, minus aut error. Aperiam, a? Soluta, sunt alias? Voluptatibus, iure.lorem. lorem  ipsum dolor sit, amet consectetur adipisicing elit.",
     education: [
       {
         title: "Undergraduate Student of Computer Science at BINUS University",
         date: "Sep 2022 – Jul 2026",
         subtitle: "Streaming Cyber Security",
         details:
-          "- GPA: 3.80 / 4.0\n- Relevant Courses: Algorithm, Data Structure, Software Security, dll.",
+          "- GPA: 3.95 / 4.0\n- Relevant Courses: Algorithm, Data Structure, Software Security, dll.",
       },
     ],
     experience: [
       {
-        title: "PT Astra International Tbk - AstraWorld",
+        title: "PT Astra International Tbk",
         date: "Feb 2025 – Feb 2026",
         subtitle: "Software Engineer Internship",
         details:
           "- Developed and maintained applications based on business needs.\n- Performed bug fixing and troubleshooting.",
+      },
+    ],
+    competitions: [
+      {
+        title: "HackFest 2024",
+        date: "Jan 2024",
+        subtitle: "Google Developer Student Clubs",
+        details:
+          "- Worked in a team to develop technological solutions, contributing ideas and collaborating to solve challenges.",
+      },
+    ],
+    volunteers: [
+      {
+        title: "Mountain Fairy",
+        date: "Nov 2023",
+        subtitle: "",
+        details:
+          "- Participated in a tree-planting activity in Lembang, Bandung, as part of an environmental conservation effort.",
+      },
+    ],
+    certifications: [
+      {
+        title: "The Complete 2024 Web Development Bootcamp (Udemy)",
+        date: "Nov 2024",
+        subtitle: "",
+        details: "",
       },
     ],
     skills: {
@@ -153,14 +179,26 @@ export default function Home() {
   const handleArrayChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number,
-    type: "education" | "experience",
+    type:
+      | "education"
+      | "experience"
+      | "competitions"
+      | "volunteers"
+      | "certifications",
   ) => {
     const newArray = [...cvData[type]];
     newArray[index] = { ...newArray[index], [e.target.name]: e.target.value };
     setCvData({ ...cvData, [type]: newArray });
   };
 
-  const addArrayItem = (type: "education" | "experience") => {
+  const addArrayItem = (
+    type:
+      | "education"
+      | "experience"
+      | "competitions"
+      | "volunteers"
+      | "certifications",
+  ) => {
     setCvData({
       ...cvData,
       [type]: [
@@ -170,7 +208,15 @@ export default function Home() {
     });
   };
 
-  const removeArrayItem = (index: number, type: "education" | "experience") => {
+  const removeArrayItem = (
+    index: number,
+    type:
+      | "education"
+      | "experience"
+      | "competitions"
+      | "volunteers"
+      | "certifications",
+  ) => {
     const newArray = [...cvData[type]];
     newArray.splice(index, 1);
     setCvData({ ...cvData, [type]: newArray });
@@ -457,7 +503,7 @@ export default function Home() {
 
             <div className="space-y-4">
               <h3 className="font-bold text-black border-b border-gray-200 pb-2 uppercase tracking-widest text-xs">
-                Experience
+                Working Experience
               </h3>
               {cvData.experience.map((exp, index) => (
                 <div
@@ -512,6 +558,169 @@ export default function Home() {
                 className="w-full py-3 border border-gray-300 text-black rounded-xl hover:bg-black hover:text-white transition-all text-xs font-bold uppercase tracking-widest cursor-pointer"
               >
                 + Add Experience
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-bold text-black border-b border-gray-200 pb-2 uppercase tracking-widest text-xs">
+                Competition Experiences
+              </h3>
+              {cvData.competitions.map((comp, index) => (
+                <div
+                  key={index}
+                  className="p-5 bg-[#fafafa] border border-gray-200 rounded-xl space-y-4 relative group"
+                >
+                  <button
+                    type="button"
+                    onClick={() => removeArrayItem(index, "competitions")}
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                  <InputField
+                    label="Competition Name"
+                    name="title"
+                    value={comp.title}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "competitions")
+                    }
+                  />
+                  <InputField
+                    label="Date"
+                    name="date"
+                    value={comp.date}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "competitions")
+                    }
+                  />
+                  <InputField
+                    label="Organizer / Host"
+                    name="subtitle"
+                    value={comp.subtitle}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "competitions")
+                    }
+                  />
+                  <TextAreaField
+                    label="Details & Achievements"
+                    name="details"
+                    value={comp.details}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "competitions")
+                    }
+                    rows={4}
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addArrayItem("competitions")}
+                className="w-full py-3 border border-gray-300 text-black rounded-xl hover:bg-black hover:text-white transition-all text-xs font-bold uppercase tracking-widest cursor-pointer"
+              >
+                + Add Competition
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-bold text-black border-b border-gray-200 pb-2 uppercase tracking-widest text-xs">
+                Volunteer Experiences
+              </h3>
+              {cvData.volunteers.map((vol, index) => (
+                <div
+                  key={index}
+                  className="p-5 bg-[#fafafa] border border-gray-200 rounded-xl space-y-4 relative group"
+                >
+                  <button
+                    type="button"
+                    onClick={() => removeArrayItem(index, "volunteers")}
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                  <InputField
+                    label="Program Name"
+                    name="title"
+                    value={vol.title}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "volunteers")
+                    }
+                  />
+                  <InputField
+                    label="Date"
+                    name="date"
+                    value={vol.date}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "volunteers")
+                    }
+                  />
+                  <InputField
+                    label="Organizer (Optional)"
+                    name="subtitle"
+                    value={vol.subtitle}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "volunteers")
+                    }
+                  />
+                  <TextAreaField
+                    label="Activity Details"
+                    name="details"
+                    value={vol.details}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "volunteers")
+                    }
+                    rows={4}
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addArrayItem("volunteers")}
+                className="w-full py-3 border border-gray-300 text-black rounded-xl hover:bg-black hover:text-white transition-all text-xs font-bold uppercase tracking-widest cursor-pointer"
+              >
+                + Add Volunteer
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-bold text-black border-b border-gray-200 pb-2 uppercase tracking-widest text-xs">
+                Certification & Trainning
+              </h3>
+              {cvData.certifications.map((cert, index) => (
+                <div
+                  key={index}
+                  className="p-5 bg-[#fafafa] border border-gray-200 rounded-xl space-y-4 relative group"
+                >
+                  <button
+                    type="button"
+                    onClick={() => removeArrayItem(index, "certifications")}
+                    className="absolute top-4 right-4 text-[10px] uppercase tracking-widest text-red-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                  <InputField
+                    label="Certification Title (+ Issuer)"
+                    name="title"
+                    value={cert.title}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "certifications")
+                    }
+                  />
+                  <InputField
+                    label="Date"
+                    name="date"
+                    value={cert.date}
+                    onChange={(e: any) =>
+                      handleArrayChange(e, index, "certifications")
+                    }
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addArrayItem("certifications")}
+                className="w-full py-3 border border-gray-300 text-black rounded-xl hover:bg-black hover:text-white transition-all text-xs font-bold uppercase tracking-widest cursor-pointer"
+              >
+                + Add Certification
               </button>
             </div>
 
@@ -576,14 +785,16 @@ export default function Home() {
                 </p>
               </div>
             )}
+
+            {/* EDUCATION PREVIEW */}
             {cvData.education.length > 0 && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">Education</h2>
                 <hr className="border-black border-t-[1.5px] mt-[2px] mb-[4px]" />
                 {cvData.education.map((edu, index) => (
                   <div key={index} className="mb-[6px]">
-                    <div className="flex justify-between font-bold">
-                      <span>{edu.title}</span>
+                    <div className="flex justify-between">
+                      <span className="font-bold">{edu.title}</span>
                       <span>{edu.date}</span>
                     </div>
                     <div>{edu.subtitle}</div>
@@ -594,6 +805,8 @@ export default function Home() {
                 ))}
               </div>
             )}
+
+            {/* EXPERIENCE PREVIEW */}
             {cvData.experience.length > 0 && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">
@@ -602,8 +815,8 @@ export default function Home() {
                 <hr className="border-black border-t-[1.5px] mt-[2px] mb-[4px]" />
                 {cvData.experience.map((exp, index) => (
                   <div key={index} className="mb-[6px]">
-                    <div className="flex justify-between font-bold">
-                      <span>{exp.title}</span>
+                    <div className="flex justify-between">
+                      <span className="font-bold">{exp.title}</span>
                       <span>{exp.date}</span>
                     </div>
                     <div>{exp.subtitle}</div>
@@ -614,6 +827,72 @@ export default function Home() {
                 ))}
               </div>
             )}
+
+            {/* COMPETITIONS PREVIEW */}
+            {cvData.competitions.length > 0 && (
+              <div className="mb-4">
+                <h2 className="text-[11pt] font-bold uppercase">
+                  Competition Experiences
+                </h2>
+                <hr className="border-black border-t-[1.5px] mt-[2px] mb-[4px]" />
+                {cvData.competitions.map((comp, index) => (
+                  <div key={index} className="mb-[6px]">
+                    <div className="flex justify-between">
+                      <span className="font-bold">{comp.title}</span>
+                      <span>{comp.date}</span>
+                    </div>
+                    {comp.subtitle && <div>{comp.subtitle}</div>}
+                    {comp.details && (
+                      <div className="whitespace-pre-wrap ml-4">
+                        {comp.details}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* VOLUNTEERS PREVIEW */}
+            {cvData.volunteers.length > 0 && (
+              <div className="mb-4">
+                <h2 className="text-[11pt] font-bold uppercase">
+                  Volunteer Experiences
+                </h2>
+                <hr className="border-black border-t-[1.5px] mt-[2px] mb-[4px]" />
+                {cvData.volunteers.map((vol, index) => (
+                  <div key={index} className="mb-[6px]">
+                    <div className="flex justify-between">
+                      <span className="font-bold">{vol.title}</span>
+                      <span>{vol.date}</span>
+                    </div>
+                    {vol.subtitle && <div>{vol.subtitle}</div>}
+                    {vol.details && (
+                      <div className="whitespace-pre-wrap ml-4">
+                        {vol.details}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* CERTIFICATIONS PREVIEW */}
+            {cvData.certifications.length > 0 && (
+              <div className="mb-4">
+                <h2 className="text-[11pt] font-bold uppercase">
+                  Certification & Trainning
+                </h2>
+                <hr className="border-black border-t-[1.5px] mt-[2px] mb-[4px]" />
+                {cvData.certifications.map((cert, index) => (
+                  <div key={index} className="flex justify-between mb-[2px]">
+                    <span>- {cert.title}</span>
+                    <span>{cert.date}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* SKILLS PREVIEW */}
             {(cvData.skills.technical || cvData.skills.soft) && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">Skills</h2>
