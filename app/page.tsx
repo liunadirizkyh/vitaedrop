@@ -251,7 +251,7 @@ export default function Home() {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: customEasing }}
-          className="absolute top-6 left-6 md:top-8 md:left-16 bg-white border border-gray-200 p-4 rounded-2xl shadow-xl w-48 z-20 md:block"
+          className="absolute top-6 left-6 md:top-8 md:left-16 w-48 z-20 md:block"
         >
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">
             Optimization
@@ -300,7 +300,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7, ease: customEasing }}
-          className="absolute bottom-6 left-6 md:bottom-8 md:left-16 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm z-20 flex items-center gap-2"
+          className="absolute bottom-6 left-6 md:bottom-8 md:left-16 z-20 flex items-center gap-2"
         >
           <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
           <p className="text-[10px] font-bold uppercase tracking-widest">
