@@ -398,8 +398,8 @@ export default function Home() {
   // ==========================================
   return (
     <main className="min-h-screen flex flex-col xl:flex-row bg-zinc-50 font-sans selection:bg-black selection:text-white">
-      {/* LEFT: Form Input Section */}
-      <section className="w-full xl:w-[40%] bg-white border-r border-zinc-200 p-8 h-screen overflow-y-auto custom-scrollbar shadow-xl z-10 relative">
+      {/* LEFT: Form Input Section (Disesuaikan agar scroll HP mulus) */}
+      <section className="w-full xl:w-[40%] bg-white border-r border-zinc-200 p-6 xl:p-8 h-auto xl:h-screen xl:overflow-y-auto custom-scrollbar shadow-xl z-10 relative">
         <div className="max-w-md mx-auto pb-10">
           <button
             onClick={() => setIsGenerating(false)}
@@ -757,11 +757,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* RIGHT: Live Preview Section */}
-      <section className="w-full xl:w-[60%] bg-[#e5e5e5] p-8 flex justify-center items-start h-screen overflow-y-auto">
+      {/* RIGHT: Live Preview Section (Disesuaikan agar bisa pan scroll & layout aman di HP) */}
+      <section className="w-full xl:w-[60%] bg-[#e5e5e5] p-4 xl:p-8 flex justify-start xl:justify-center items-start h-auto xl:h-screen overflow-x-auto xl:overflow-y-auto">
         <div
           ref={cvRef}
-          className="bg-white shadow-2xl print:shadow-none mx-auto min-h-[297mm] print:min-h-0 print:w-[210mm]"
+          className="bg-white shadow-2xl print:shadow-none min-w-[210mm] min-h-[297mm] print:min-h-0 print:min-w-0 print:w-[210mm] shrink-0 xl:mx-auto"
           style={{ width: "210mm", padding: "12mm 15mm" }}
         >
           <div
