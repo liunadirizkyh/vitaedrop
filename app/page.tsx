@@ -1,14 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
+
+// Tambahkan deklarasi agar TypeScript tidak error memanggil window.snap
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
 
 export default function Home() {
   // ==============================
   // 1. STATE UNTUK GENERATOR CV
   // ==============================
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [cvData, setCvData] = useState({
     name: "LIUNADI RIZKY HIDAYAT",
     contact:
@@ -41,11 +49,91 @@ export default function Home() {
   });
 
   const cvRef = useRef<HTMLDivElement>(null);
+
+  // Logic Print ke PDF
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_${cvData.name.replace(/\s+/g, "_")}`,
   });
 
+  // ==========================================
+  // 2. MIDTRANS INTEGRATION
+  // ==========================================
+
+  useEffect(() => {
+    // Memuat script Snap Midtrans
+    const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "";
+
+    const script = document.createElement("script");
+    script.src = snapScript;
+    script.setAttribute("data-client-key", clientKey);
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handleCheckout = async () => {
+    setIsLoading(true);
+    try {
+      // MENGGUNAKAN PATH /api/payment SESUAI STRUKTUR FOLDER KAMU
+      const response = await fetch("/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: `CV-${Date.now()}`,
+          gross_amount: 15000,
+          customer_name: cvData.name,
+        }),
+      });
+
+      // Cek jika response bukan JSON (mencegah error <!DOCTYPE)
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(
+          "Server tidak memberikan respon JSON. Pastikan API Route sudah benar.",
+        );
+      }
+
+      const data = await response.json();
+
+      if (data.token) {
+        window.snap.pay(data.token, {
+          onSuccess: function (result: any) {
+            handlePrint();
+            setIsLoading(false);
+          },
+          onPending: function () {
+            alert("Selesaikan pembayaran anda.");
+            setIsLoading(false);
+          },
+          onError: function () {
+            alert("Pembayaran Gagal.");
+            setIsLoading(false);
+          },
+          onClose: function () {
+            alert("Anda menutup pembayaran.");
+            setIsLoading(false);
+          },
+        });
+      } else {
+        alert("Gagal mengambil token. Cek terminal Next.js kamu.");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("Terjadi kesalahan sistem. Cek console browser.");
+      setIsLoading(false);
+    }
+  };
+
+  // ==========================================
+  // 3. HANDLERS (LOGIC INPUT)
+  // ==========================================
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -91,12 +179,11 @@ export default function Home() {
   const customEasing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   // ==========================================
-  // RENDER VIEW 1: LANDING PAGE (1 PAGE, RAME, NO SCROLL)
+  // RENDER VIEW 1: LANDING PAGE
   // ==========================================
   if (!isGenerating) {
     return (
       <div className="h-screen w-screen bg-[#fafafa] text-gray-900 font-sans overflow-hidden relative flex items-center justify-center selection:bg-black selection:text-white">
-        {/* 1. BACKGROUND GRID & WATERMARK (Bikin Rame) */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.03]"
           style={{
@@ -201,10 +288,7 @@ export default function Home() {
           transition={{ duration: 1.2, ease: customEasing, delay: 0.2 }}
           className="relative z-30 w-full max-w-4xl px-6 flex flex-col items-center"
         >
-          {/* Efek Glow di belakang Logo */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-          {/* Logo Utama */}
           <motion.img
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
@@ -212,8 +296,6 @@ export default function Home() {
             alt="VitaeDrop Logo"
             className="w-full max-w-[600px] h-auto object-contain drop-shadow-2xl mb-8 relative z-10"
           />
-
-          {/* Detail Teks Editorial */}
           <div className="overflow-hidden mb-12 text-center flex flex-col items-center">
             <motion.h1
               initial={{ y: "100%" }}
@@ -234,8 +316,6 @@ export default function Home() {
               and success.
             </motion.p>
           </div>
-
-          {/* Tombol CTA dengan Animasi Garis */}
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -268,7 +348,7 @@ export default function Home() {
   }
 
   // ==========================================
-  // RENDER VIEW 2: CV GENERATOR (TIDAK BERUBAH)
+  // RENDER VIEW 2: CV GENERATOR
   // ==========================================
   return (
     <main className="min-h-screen flex flex-col xl:flex-row bg-zinc-50 font-sans selection:bg-black selection:text-white">
@@ -281,7 +361,6 @@ export default function Home() {
           >
             &larr; Back
           </button>
-
           <h1 className="text-3xl font-black tracking-tighter uppercase mb-2 text-gray-900">
             Setup CV
           </h1>
@@ -454,11 +533,13 @@ export default function Home() {
               />
             </div>
 
+            {/* TOMBOL BAYAR & DOWNLOAD */}
             <div className="pt-6">
               <button
                 type="button"
-                onClick={handlePrint}
-                className="w-full bg-black text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-gray-800 transition-colors shadow-lg shadow-black/20 cursor-pointer"
+                disabled={isLoading}
+                onClick={handleCheckout}
+                className="w-full bg-black text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-gray-800 transition-all shadow-lg shadow-black/20 cursor-pointer disabled:bg-gray-400 disabled:cursor-wait"
               >
                 Download PDF
               </button>
@@ -478,15 +559,12 @@ export default function Home() {
             className="text-black text-[10.5pt] leading-[1.4]"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
           >
-            {/* HEADER */}
             <div className="text-center mb-5">
               <h1 className="text-[14pt] font-bold uppercase tracking-wide">
                 {cvData.name}
               </h1>
               <p className="mt-[2px]">{cvData.contact}</p>
             </div>
-
-            {/* SUMMARY */}
             {cvData.summary && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">
@@ -498,8 +576,6 @@ export default function Home() {
                 </p>
               </div>
             )}
-
-            {/* EDUCATION */}
             {cvData.education.length > 0 && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">Education</h2>
@@ -518,8 +594,6 @@ export default function Home() {
                 ))}
               </div>
             )}
-
-            {/* EXPERIENCE */}
             {cvData.experience.length > 0 && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">
@@ -540,8 +614,6 @@ export default function Home() {
                 ))}
               </div>
             )}
-
-            {/* SKILLS */}
             {(cvData.skills.technical || cvData.skills.soft) && (
               <div className="mb-4">
                 <h2 className="text-[11pt] font-bold uppercase">Skills</h2>
@@ -567,6 +639,7 @@ export default function Home() {
   );
 }
 
+// Components
 const InputField = ({ label, name, value, onChange }: any) => (
   <div className="space-y-1.5">
     <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
