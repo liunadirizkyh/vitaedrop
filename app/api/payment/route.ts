@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     // 2. Inisialisasi Midtrans Snap (Gunakan const, bukan let)
     // Alternatif jika masih merah: paksa jadikan tipe 'any'
     const snap = new midtransClient.Snap({
-      isProduction: true,
+      isProduction: false,
       serverKey: process.env.MIDTRANS_SERVER_KEY || "",
       clientKey: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "",
     } as any);
