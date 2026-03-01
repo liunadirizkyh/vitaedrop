@@ -80,6 +80,21 @@ export default function Home() {
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_${cvData.name.replace(/\s+/g, "_")}`,
+    // Tambahkan pageStyle ini untuk memaksa hilangkan header/footer bawaan browser
+    pageStyle: `
+      @page {
+        size: A4 portrait;
+        margin: 0 !important;
+      }
+      @media print {
+        html, body {
+          height: initial !important;
+          overflow: initial !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    `,
   });
 
   // ==========================================
@@ -764,21 +779,6 @@ export default function Home() {
           className="bg-white shadow-2xl print:shadow-none min-w-[210mm] min-h-[297mm] print:min-h-0 print:min-w-0 print:w-[210mm] shrink-0 xl:mx-auto"
           style={{ width: "210mm", padding: "12mm 15mm" }}
         >
-          {/* INI KUNCI UNTUK MENGHILANGKAN HEADER/FOOTER BROWSER HP */}
-          <style type="text/css" media="print">
-            {`
-              @page {
-                size: A4 portrait;
-                margin: 0px !important; 
-              }
-              body {
-                margin: 0px !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-              }
-            `}
-          </style>
-
           <div
             className="text-black text-[10.5pt] leading-[1.4]"
             style={{ fontFamily: '"Times New Roman", Times, serif' }}
