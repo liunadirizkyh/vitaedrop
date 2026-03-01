@@ -77,9 +77,22 @@ export default function Home() {
   const cvRef = useRef<HTMLDivElement>(null);
 
   // Logic Print ke PDF
+  // Logic Print ke PDF
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_${cvData.name.replace(/\s+/g, "_")}`,
+    pageStyle: `
+      @page {
+        size: A4;
+        margin: 0mm; /* Ini yang akan menghilangkan link URL dan tanggal bawaan browser HP */
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    `,
   });
 
   // ==========================================
