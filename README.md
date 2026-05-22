@@ -2,8 +2,6 @@
 
 VitaeDrop is a modern, responsive Curriculum Vitae (CV) builder application built with **Next.js** and **React**. It empowers users to create, preview, and export professional-grade CVs in real-time, all within a clean and intuitive user interface.
 
-**🚀 Live Demo:** [https://vitaedrop.vercel.app/](https://vitaedrop.vercel.app/)
-
 ## ✨ Key Features
 
 - **Real-Time Preview**: Instantly see how your CV looks as you type, designed with a realistic A4-page layout system.
